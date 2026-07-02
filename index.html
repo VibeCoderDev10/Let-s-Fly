@@ -242,11 +242,11 @@
       <div class="pricing-wrap">
         <div class="pricing-card">
           <span class="pricing-badge">Most Popular</span>
-          <div class="pricing-name">Basic Care Plan</div>
-          <div class="pricing-price"><sup>₹</sup>799</div>
-          <p class="pricing-sub">per plan</p>
+          <div class="pricing-name">Basic Plan</div>
+          <div class="pricing-price"><sup>₹</sup>500</div>
+          <p class="pricing-sub">Per Session</p>
           <ul class="pricing-features">
-            <li>8 Online Counselling Sessions</li>
+            <li>1 Online Counselling Session</li>
             <li>Available in English &amp; Tamil</li>
             <li>Voice Call &amp; Chat sessions</li>
             <li>WhatsApp check-ins between sessions</li>
@@ -332,7 +332,7 @@
             <div class="step-num">2</div>
             <div class="step-text">
               <h4>Enter Session Amount</h4>
-              <p>Enter the plan fee (<strong>₹799</strong> for the Basic Care Plan, which includes 8 online sessions).</p>
+              <p>Enter the session fee (<strong>₹500</strong> for the Basic Plan, per session).</p>
             </div>
           </div>
           
@@ -468,36 +468,49 @@
     </a>
   </div>
 
-  <!-- GOOGLE FORM INTEGRATION MODAL -->
+  <!-- BOOKING MODAL – TWO-STEP FLOW -->
   <div id="booking-modal" class="modal-overlay">
     <div class="modal-content">
       <button class="modal-close" onclick="closeBookingModal()" aria-label="Close modal">✕</button>
       <div class="modal-header">
         <h3>Book a Counselling Session</h3>
-        <p>Step 1 of 2: Please fill out our confidential intake form below</p>
+        <p>Complete both steps below to book your therapy session</p>
       </div>
-      <div class="modal-body">
-        <div class="iframe-container">
-          <!-- ==================================================
-               GOOGLE FORM LINK CONFIGURATION
-               1. Replace the placeholder URL in the 'src' below with your actual Google Form link.
-               2. Make sure the URL ends with '?embedded=true' for clean inside-modal rendering.
-               ================================================== -->
-          <iframe 
-            id="google-form-iframe"
-            src="https://docs.google.com/forms/d/e/1FAIpQLSf5fB5H47fD40s72oT-5323D19_59238e88/viewform?embedded=true" 
-            width="100%" 
-            height="100%" 
-            frameborder="0" 
-            marginheight="0" 
-            marginwidth="0">
-            Loading Form...
-          </iframe>
+      <div class="modal-body modal-body-steps">
+
+        <!-- STEP 1 -->
+        <div class="booking-step" id="booking-step-1">
+          <div class="booking-step-header">
+            <span class="booking-step-number">1</span>
+            <h4>Step 1 – Complete the Initial Assessment Form</h4>
+          </div>
+          <p class="booking-step-desc">Completing this form is mandatory before booking a therapy session. It helps our therapists understand your needs before your first session.</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSezz9FNChDiFZn3CNi6FY56adKE-Njra5Qkw2p0OGkcwLHOmA/viewform" target="_blank" rel="noopener" class="btn-teal booking-form-btn" id="btn-fill-form">
+            📋 Fill Assessment Form
+          </a>
+          <div class="booking-confirm-wrap">
+            <label class="booking-checkbox-label" for="assessment-confirm">
+              <input type="checkbox" id="assessment-confirm" onchange="toggleBookingStep2()">
+              <span class="custom-checkbox"></span>
+              <span>I have completed the assessment form.</span>
+            </label>
+            <p class="booking-confirm-note">Completing the assessment form helps our therapists understand your needs before your first session.</p>
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <p class="modal-footer-tip">💡 Once you submit the form, click the button below to proceed to the payment step.</p>
-        <button class="btn-gold" style="padding:10px 24px;font-size:14px;cursor:pointer;" onclick="proceedToPayment()">I have submitted the form - Proceed to Payment</button>
+
+        <!-- STEP 2 -->
+        <div class="booking-step booking-step-locked" id="booking-step-2">
+          <div class="booking-step-header">
+            <span class="booking-step-number">2</span>
+            <h4>Step 2 – Book Your Session</h4>
+          </div>
+          <p class="booking-step-desc">Once you have completed the assessment form, click below to proceed to the payment step and book your session.</p>
+          <button class="btn-gold booking-proceed-btn" id="btn-proceed-payment" disabled onclick="proceedToPayment()">
+            Proceed to Payment & Book Session
+          </button>
+          <p class="booking-lock-msg" id="booking-lock-msg">🔒 Please complete Step 1 first to unlock booking.</p>
+        </div>
+
       </div>
     </div>
   </div>

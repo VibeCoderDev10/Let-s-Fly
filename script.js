@@ -134,6 +134,20 @@ document.addEventListener('DOMContentLoaded', () => {
 function openBookingModal(sessionType) {
   const modal = document.getElementById('booking-modal');
   if (modal) {
+    // Reset two-step state each time modal opens
+    const checkbox = document.getElementById('assessment-confirm');
+    const step2 = document.getElementById('booking-step-2');
+    const proceedBtn = document.getElementById('btn-proceed-payment');
+    const lockMsg = document.getElementById('booking-lock-msg');
+
+    if (checkbox) checkbox.checked = false;
+    if (step2) {
+      step2.classList.add('booking-step-locked');
+      step2.classList.remove('booking-step-unlocked');
+    }
+    if (proceedBtn) proceedBtn.disabled = true;
+    if (lockMsg) lockMsg.classList.remove('hidden');
+
     modal.classList.add('open');
     document.body.style.overflow = 'hidden'; // Lock page scroll behind modal
   }
@@ -144,6 +158,26 @@ function closeBookingModal() {
   if (modal) {
     modal.classList.remove('open');
     document.body.style.overflow = ''; // Unlock page scroll
+  }
+}
+
+// --- TWO-STEP BOOKING: ASSESSMENT CHECKBOX TOGGLE ---
+function toggleBookingStep2() {
+  const checkbox = document.getElementById('assessment-confirm');
+  const step2 = document.getElementById('booking-step-2');
+  const proceedBtn = document.getElementById('btn-proceed-payment');
+  const lockMsg = document.getElementById('booking-lock-msg');
+
+  if (checkbox && checkbox.checked) {
+    step2.classList.remove('booking-step-locked');
+    step2.classList.add('booking-step-unlocked');
+    proceedBtn.disabled = false;
+    if (lockMsg) lockMsg.classList.add('hidden');
+  } else {
+    step2.classList.add('booking-step-locked');
+    step2.classList.remove('booking-step-unlocked');
+    proceedBtn.disabled = true;
+    if (lockMsg) lockMsg.classList.remove('hidden');
   }
 }
 
@@ -174,3 +208,4 @@ window.addEventListener('click', (e) => {
     closeBookingModal();
   }
 });
+
